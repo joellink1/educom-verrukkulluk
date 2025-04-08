@@ -9,11 +9,20 @@ public function __construct($connection) {
     $this->connection = $connection;
 }
 
-private function selectGrocery($user_id) {
+public function selectGrocery($user_id) {
 
     $sql = "select * from grocery where user_id = '$user_id'";
     $result = mysqli_query($this->connection, $sql);
-    return($result);
+    $groceries = [];
+
+    while($row = $result->fetch_assoc()) {
+        $product = new product($this->connection);
+        $productinfo = $product->selectProduct($row["product_id"]);
+        $ingredientInfo = [...$row,...$productinfo];
+
+        $groceries[] = $ingredientInfo;
+    }
+    return($groceries);
 }
 
 

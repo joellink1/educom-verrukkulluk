@@ -13,7 +13,10 @@ class recipe {
         $sql = "select * from recipe" ;
 
         if($recipe_id !== NULL){
-            $sql .= " where id = $recipe_id";
+            $sql1 = $sql;
+            $sql2 =  " where id = '$recipe_id'";
+            $sql = $sql1 . $sql2;
+            
         }
         $recipes = [];
 

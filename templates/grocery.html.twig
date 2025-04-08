@@ -1,0 +1,68 @@
+{% extends "main.html.twig" %}
+
+{% block header %}
+<div class="row">
+    <div class="container-fluid header-main" style="background: url(assets/img/header.png) no-repeat center; background-size: cover">
+    <p><a href="/educom-verrukkulluk/index.php">
+    <img src="assets/img/logo-v2.png" style="scale: 75%"/></a></P>
+    </div>
+</div>
+{% endblock %}
+
+{% block content %}
+    <div class="col-md-8" style="padding: 20px">
+        <div class="container-fluid border shadow" style="height: 100%; padding: 30px; overflow: auto">
+            <div class="row" style="margin-bottom: 20px">    
+                <h1 style="color: var(--lighter-green)"> Boodschappen </h1>
+            </div>
+            <div class="container-fluid" style="height: 85%; overflow: auto">
+            {% set sumTotal = 0 %}
+            {% for record in data %}
+                <div class="row" style="margin-bottom: 25px">
+                    <div class="col-md-2">
+                            <div class="container pictogram" style="background: url({{ record.image }}) no-repeat center; background-size: contain"></div>
+                    </div>
+                    <div class="col-md-6">
+                        <h3 style="color: var(--lighter-green)"> {{ record.name }} </h3>
+                        {{ record.description }}
+                    </div>
+                    <div class="col-md-1">
+                        {% set packagesraw = record.amount / record.packaging %}
+                        {% set packages = (packagesraw|round(0, "ceil")) %}
+                        {{ packages }}
+                    </div>
+                    <div class="col-md-1">
+                        <i class="fas fa-euro-sign icon"></i>
+                        {% set total = (packages * record.price)/100 %}
+                        {% set sumTotal = sumTotal + total %}
+                        {{ total|round(2, "ceil")|number_format(2, ",", '.') }}
+                    </div>
+                    <div class="col-md-1">
+    	                <i class="fas fa-check fa-2x" style="color: var(--lighter-green)" ></i>
+                    </div>
+                    <div class="col-md-1">
+                        <i class="fas fa-trash-alt fa-2x" style="color: var(--darker-red)"></i>
+                    </div>
+                </div>
+            {% endfor %}
+            </div>
+            <div class="row" style="align-self: end">
+                <div class="col-md-3">
+                    <h1 style="color: var(--darker-red)"> Totaal </h1>
+                </div>
+                <div class="col-md-6">
+                </div>
+                <div class="col-md-1">
+                    <i class="fas fa-euro-sign icon"></i>
+                    {{ sumTotal|round(2, "ceil")|number_format(2, ",", '.')  }}
+                </div>
+                <div class="col-md-1">
+                </div>
+                <div class="col-md-1">
+                    <i class="fas fa-trash-alt fa-2x" style="color: var(--darker-red)"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

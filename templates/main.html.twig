@@ -7,47 +7,192 @@
     <link rel="stylesheet" type="text/css" href="assets/bootstrap/css/bootstrap.css" />
     <link rel="stylesheet" type="text/css" href="assets/css/fonts.css" />
     <link rel="stylesheet" type="text/css" href="assets/css/fontawesome.css" />
+	<link rel="stylesheet" href="assets/vegas/vegas.css" />
+	<link rel="stylesheet" href="assets/vegas/vegas.css" />
 
     <link rel="stylesheet" type="text/css" href="assets/css/main.css" />
+	<link rel="stylesheet" type="text/css" href="assets/css/styles.css" />
 
     <script type="text/javascript" language="javascript" src="assets/jquery/jquery-3.5.1.js"></script>
     <script type="text/javascript" language="javascript" src="assets/bootstrap/js/bootstrap.js"></script>
+	<script src="assets/vegas/vegas.js"></script>
+	<script>
+		$(document).ready( function() {
+
+			$("#addToCart").onClick(function() {
+				alert("klik werkt");
+
+				// $.ajax({
+				// 	url: "/educom-verrukkulluk/index.php",
+				// 	method: "GET",
+				// 	data: {action: "addGroceries"},
+				// 	success: function(){
+				// 	}
+				// })
+			})
+		})
+
+		
+
+	</script>
+
+	<meta
+	name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=yes"
+	/>
+
 
 </html>
 <body>
-<div class="container-fluid">
 
-    <div class="row">
-        <div class="col-md-12">
-        {% block header %}
-            
-        {% endblock %}   
-        </div>
-    </div>
+<div class="container-fluid" style="padding: 20px">
+    {% block header %}
 
-    <div class="row">
-        <div class="col-md-3">
-            <h2>Agenda</h2>
-            <i class="fa fa-calendar"></i> FontAwesome <a href="https://fontawesome.com/icons?d=gallery&m=free">Documentation</a><br>
-            <i class="fa fa-file-pdf"></i><a href="https://www.layoutit.com/build">Layout-it</a>
+    {% endblock %}
+	<div class="container-fluid">
+	<div class="row" style="padding: 30px">
+		<div class="col-md-4" style="justify-content: center">
+			<div class="row" style="padding: 20px">
+				<div class="col-md-12 p-5 agenda shadow" style="margin-left: 10%">
+					<div class="row">
+						<img src="assets/img/verrukkulluk-agenda.png" style="scale: 40%;" />
+					</div>
+					<div class="row">
+						<div class="container-fluid" style="justify-content: center">			
+							<div class="row" style="text-align: left">
+							  	<div class="col-md-2" style="align-content: center">
+									<i class="fas fa-calendar-alt fa-2x"></i>
+								</div>
+								<div class="col-md-10">
+									<h2> Vegetarisch koken </h2>
+								</div>
+							</div>
+							<div class="row" style="text-align: left"style="margin-bottom: 5px">
+							  	<div class="col-md-2">
+								</div>
+								<div class="col-md-10">
+									Een workshop vegetarisch koken, onder leiding van Trientje Hupsakee
+								</div>
+							</div>			
+							<div class="row" style="text-align: left">
+							  	<div class="col-md-2" style="align-content: center">
+									<i class="fas fa-calendar-alt fa-2x"></i>
+								</div>
+								<div class="col-md-10">
+									<h2> Vegetarisch koken </h2>
+								</div>
+							</div>
+							<div class="row" style="text-align: left"style="margin-bottom: 5px">
+							  	<div class="col-md-2">
+								</div>
+								<div class="col-md-10">
+									Een workshop vegetarisch koken, onder leiding van Trientje Hupsakee
+								</div>			
+							<div class="row" style="text-align: left">
+							  	<div class="col-md-2" style="align-content: center">
+									<i class="fas fa-calendar-alt fa-2x"></i>
+								</div>
+								<div class="col-md-10">
+									<h2> Vegetarisch koken </h2>
+								</div>
+							</div>
+							<div class="row" style="text-align: left"style="margin-bottom: 5px">
+							  	<div class="col-md-2">
+								</div>
+								<div class="col-md-10">
+									Een workshop vegetarisch koken, onder leiding van Trientje Hupsakee
+								</div>			
+							<div class="row" style="text-align: left">
+							  	<div class="col-md-2" style="align-content: center">
+									<i class="fas fa-calendar-alt fa-2x"></i>
+								</div>
+								<div class="col-md-10">
+									<h2> Vegetarisch koken </h2>
+								</div>
+							</div>
+							<div class="row" style="text-align: left"style="margin-bottom: 5px">
+							  	<div class="col-md-2">
+								</div>
+								<div class="col-md-10">
+									Een workshop vegetarisch koken, onder leiding van Trientje Hupsakee
+								</div>			
+							<div class="row" style="text-align: left">
+							  	<div class="col-md-2" style="align-content: center">
+									<i class="fas fa-calendar-alt fa-2x"></i>
+								</div>
+								<div class="col-md-10">
+									<h2> Vegetarisch koken </h2>
+								</div>
+							</div>
+							<div class="row" style="text-align: left"style="margin-bottom: 5px">
+							  	<div class="col-md-2">
+								</div>
+								<div class="col-md-10">
+									Een workshop vegetarisch koken, onder leiding van Trientje Hupsakee
+								</div>
+							</div>
+							</div>
+							</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row" style="padding: 20px">
+				<div class="col-md-12 p-2 login shadow" style="margin-left: 10%">
+					<div class="row">
+						<img src="assets/img/verrukkulluk-login.png" style="scale: 40%;" />
+					</div>
+					<div class="row">
+						<div class="container-fluid" style="justify-content: center; color: white; text-align: center">			
+							<h3> Gebruikersnaam </h3>
+							<input type="text"><br>
+							<br>
+							<h3> Wachtwoord </h3>
+							<input type="text"><br>
+							<br>
+							<div class="block login-button" style="margin: auto">
+								<h2 style="scale: 90%"> Login </h2>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		{% block content %}
 
-
-        </div>
-        <div class="col-md-9">
-            <h2>Content</h2>
-            {%  block content %}
-            {%  endblock %}
-        </div>
-    </div>
-
-
-    <div class="row">
-        <div class="col-md-12">
-            <h1>Footer</h1>
-        </div>
-    </div>
-
-
+		{% endblock %}
+	</div>
+	<div class="row" style="padding: 20px">
+		<div class="col-md-12 footer">
+			<div class="row">
+				<div class="col-md-1">
+					<div class="container-fluid">
+						<img src="assets/img/verrukkulluk-pay-off.png" style="object-fit: contain; height: 100px">
+					</div>
+				</div>
+				<div class="col-md-2">
+					<div class="container-fluic">
+						<img src="assets/img/verrukkulluk-contact.png" style="object-fit: contain; height: 100px">
+					</div>
+				</div>	
+			</div>
+			<div class="row">
+				<div class="col-md-1">
+				</div>
+				<div class="col-md-1" style="color: white">
+					Verrukkulluk
+					Poststraat 2B
+					Sittard
+					info@verrukkulluk.nl	
+				</div>
+			</div>
+		</div>
+	</div>
+	</div>
 </div>
-
 </body>
+    {# Dump #}
+    <pre>
+    {{ dump(data) }}
+    </pre>

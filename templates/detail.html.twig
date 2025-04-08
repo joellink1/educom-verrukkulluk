@@ -1,5 +1,176 @@
 {% extends "main.html.twig" %}
 
+
+
+
 {% block header %}
-<h1>Hallo Bram</h1>
+<div class="row">
+    <div class="container-fluid header-main" style="background: url( {{ data.image }} ) no-repeat center; background-size: cover">
+        <p><a href="/educom-verrukkulluk/index.php">
+        <img src="assets/img/logo-v2.png" style="scale: 75%"/></a></p>
+    </div>
+</div>
+{% endblock %}
+
+{% block content %}
+
+
+<div class="col-md-8">
+    <div class="row" style="padding: 20px">
+        <div class="container-fluid border topinfo shadow" style="background: url({{ data.image }})  no-repeat center; background-size: cover;">
+            <div class="row">
+                <div class="col-md-6">
+                </div>
+                <div class="col-md-6">
+                    <div class="container-fluid border infopage">
+                        <div class="row">
+                            <div class="col-md-2 iconvalue">
+                                <i class="fas fa-user-friends icon"></i>
+                                4
+                            </div>
+                            <div class="col-md-2 iconvalue">
+                                <i class="fas fa-euro-sign icon"></i>
+                                {% set price = ((data.sumTotalPrice)/100) %}
+                                {{ price|round(2, 'ceil')}}
+                            </div>
+                            <div class="col-md-2 iconvalue">
+                                <i class="fas fa-fire-alt icon"></i>
+                                {% set calories = data.sumTotalCalories %}
+                                {{ calories|round(0, 'ceil')}}
+                            </div>
+                            <div class="col-md-6">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-5" style="color: var(--lighter-green)">
+                                <h2> {{ data.title }} </h2>
+                            </div>
+                            <div class="col-md-3">
+                            </div>
+                            <div class="col-md-4">
+                                <i class="far fa-star fa-lg"></i>
+                                <i class="far fa-star fa-lg"></i>
+                                <i class="far fa-star fa-lg"></i>
+                                <i class="far fa-star fa-lg"></i>
+                                <i class="far fa-star fa-lg"></i>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                {{ data.long_descr }}
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="oplijst">
+                                    <a style="cursor: pointer" id="addToCart"> <h3> Op lijst! </h3></a>
+                                </div> 
+                            </div>
+                            <div class="col-md-6">
+                            </div>
+                            <div class="col-md-2">
+                                <i class="far fa-heart fa-2x icon"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row" style="padding: 20px">
+        
+            <!-- Tab links -->
+            <div class="tab">
+                <button class="tablinks" onclick="openTab(event, 'Ingrediënten')" id="defaultOpen">Ingrediënten</button>
+                <button class="tablinks" onclick="openTab(event, 'Bereidingswijze')">Bereidingswijze</button>
+                <button class="tablinks" onclick="openTab(event, 'Opmerkingen')">Opmerkingen</button>
+            </div>
+            <div class="container-fluid border bottominfo shadow">
+            <!-- Tab content -->
+            <div id="Ingrediënten" class="tabcontent">
+                {% for ingredient in data.ingredients %}
+                    <div class="row" style="margin-bottom: 5px; padding-left: 5px">
+                        <div class="col-md-1">
+                            <div class="container pictogram" style="background: url({{ingredient.image}}) no-repeat center; background-size: contain">
+                            </div>
+                        </div>
+                        <div class="col-md-11">
+                            <div class="row">
+                                <h3 style="color: var(--darker-green)"> {{ ingredient.name }} </h3>
+                            </div>
+                            <div class="row">
+                                {{ ingredient.description }}
+                            </div>
+                            <div class="row" style="font-style: italic">
+                                <span style="display: inline">
+                                    <span class="ingredientsStyled"> Hoeveelheid: </span>
+                                    <span> {{ ingredient.amount }} {{ ingredient.unit }} </span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+
+            <div id="Bereidingswijze" class="tabcontent">
+                <h2>Bereidingswijze</h2>
+                {% for step in data.preparation %}
+                    <div class="row" style="margin-bottom: 5px; padding-left: 5px">
+                        <div class="row">
+                            <h3> stap {{ step.number }} </h3>
+                        </div>
+                        <div class="row">
+                            {{ step.text }}
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+
+            <div id="Opmerkingen" class="tabcontent">
+                {% for comment in data.comments %}
+                    <div class="row" style="margin-bottom: 5px; padding-left: 5px">
+                        <div class="col-md-1">
+                            <div class="container profilepic" style="background: url({{ comment.image }}) no-repeat center; background-size: contain">
+                            </div>
+                        </div>
+                        <div class="col-md-10">
+                            <div class="row">
+                                <h3> {{ comment.username }} </h3>
+                            </div>
+                            <div class="row" style="font-style: italic">
+                                {{ comment.text }}
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script>
+    document.getElementById("defaultOpen").click(); 
+
+    function openTab(evt, tabName) {
+    // Declare all variables
+    var i, tabcontent, tablinks;
+
+    // Get all elements with class="tabcontent" and hide them
+    tabcontent = document.getElementsByClassName("tabcontent");
+    for (i = 0; i < tabcontent.length; i++) {
+        tabcontent[i].style.display = "none";
+    }
+
+    // Get all elements with class="tablinks" and remove the class "active"
+    tablinks = document.getElementsByClassName("tablinks");
+    for (i = 0; i < tablinks.length; i++) {
+        tablinks[i].className = tablinks[i].className.replace(" active", "");
+    }
+
+    // Show the current tab, and add an "active" class to the button that opened the tab
+    document.getElementById(tabName).style.display = "block";
+    evt.currentTarget.className += " active";
+}
+</script>
 {% endblock %}

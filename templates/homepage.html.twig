@@ -2,47 +2,89 @@
 {% extends "main.html.twig" %}
 
 {% block header %}
-<img src="assets/img/logo-v2.png"/>
+<div class="row">
+    <div class="container-fluid header-main" style="background: url(assets/img/header.png) no-repeat center; background-size: cover">
+    <p><a href="/educom-verrukkulluk/index.php">
+    <img href="" src="assets/img/logo-v2.png" style="scale: 75%"/></a></p>
+    </div>
+</div>
 {% endblock %}
 
 
 {# nu de block content op in de main pagina vullen #}
 {% block content %}
-    {# Dit is commentaar #}
-
-    {# Print #}
-    <h1>Heading #1</h1>
-    <h2>Heading #2</h2>
-    <h3>Heading #3 t/m 5</h3>
-
-    <h4>Dit is de template {{  title }}</h4>
+<div class="col-md-8" style="padding: 0px">
+<div class="container-fluid">
 
 {# Loop #}
-    <ul>
-    {% for record in data %}
-        <li>
-            <img src="{{ record.foto }}" style="width: 100px; heigfht: 100px;">
+{# {% set counter = 0 %} #}
+{% for record in data %}
 
-            {{ record.title }}
-            {# sub-loop #}
-            <ul>
-                {% for ingr in record.ingredienten %}
-                    <li>
-                        <span {% if ingr.id < 2 %}style='color: #F00'{% endif %}>{{  ingr.naam }}</span>
+    {% if loop.index0 % 2 == 0 %}
+        <div class="row" style="margin-top: 20px">
+    {% endif %}
 
-                        {# if #}
-                        {%  if ingr.id == 3 %}
-                            <strong>Dit is ID 3!</strong>
-                        {%  endif  %}
-                    </li>
-                {% endfor %}
-            </ul>
-        </li>
-    {% endfor %}
-    <ul>
-     {# Dump #}
-       <pre>
-        {{ dump(data) }}
-       </pre>
+    <div class="col-md-6">
+    <div class="block border shadow">
+        <div class="row">
+            <div class="col-md-12" >
+                <div class="block coverimage" style="background: url({{ record.image }}) no-repeat center; background-size: cover">
+                </div>
+            </div>
+        </div>
+        <div class="row" style="padding: 20px">
+            <div class="col-md-8">
+                <h2> {{ record.title }} </h2>
+            </div>
+            <div class="col-md-4">
+                <i class="far fa-star fa-lg"></i>
+                <i class="far fa-star fa-lg"></i>
+                <i class="far fa-star fa-lg"></i>
+                <i class="far fa-star fa-lg"></i>
+                <i class="far fa-star fa-lg"></i>
+            </div>
+        </div>
+        <div class="row" style="padding: 20px">
+            <div class="col-md-12">
+                {{ record.short_descr }}
+            </div>
+        </div>
+        <div class="row" style="padding: 20px">
+            <div class="col-md-4 smullen">
+                {% set recipe_id = record.id %}
+                {% set hyperlink = ["/educom-verrukkulluk/index.php?recipe_id=", recipe_id, "&action=detail"]|join %}
+                <a href="{{ hyperlink | raw }}"> <h2> Smullen! </h2> </a>
+            </div>
+            <div class="col-md-2">
+            </div>
+            <div class="col-md-2">
+               <i class="fas fa-user-fri ends icon"></i>
+                4
+            </div>
+            <div class="col-md-2">
+                <i class="fas fa-euro-sign icon"></i>
+                {% set price = (record.sumTotalPrice/100) %}
+                {{ price|round(2, 'ceil')}}
+            </div>
+            <div class="col-md-2">
+                <i class="fas fa-fire-alt icon"></i>
+                {% set calories = record.sumTotalCalories %}
+                {{ calories|round(0, 'ceil')}}
+            </div>
+        </div>
+    
+    </div>
+    </div>
 
+    {% if loop.index0 % 2 == 1 %}
+        </div>
+    {% endif %}
+    
+ 
+
+{% endfor %}
+
+
+</div>
+</div>
 {% endblock %}
