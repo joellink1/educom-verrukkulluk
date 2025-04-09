@@ -40,7 +40,7 @@ $user_id = isset($_GET["user_id"]) ? $_GET["user_id"] : "";
 $recipe_id = isset($_GET["recipe_id"]) ? $_GET["recipe_id"] : "";
 $action = isset($_GET["action"]) ? $_GET["action"] : "homepage";
 
-$user_id = 2;
+$user_id = 3;
 
 switch($action) {
 
@@ -68,16 +68,18 @@ switch($action) {
         }
 
         case "addGroceries": {
-            echo("Succes");
-            $grocery->addGroceries($recipe_id,$user_id);
+            $result=["status"=>"success"];
+            
+            $grocery->addGroceries(1,3);
+            header('Content-Type: application/json; charset=utf-8');
+            echo json_encode($result);
+            die();
         }
 
     }
 
-/// Juiste template laden, in dit geval "homepage"
-if ($action == "detail" || $action == "homepage" || $action == "grocery") { 
-    $template = $twig->load($template);
-}
+/// Juiste template laden, in dit geval "homepage" 
+$template = $twig->load($template);
 
 
 

@@ -19,16 +19,18 @@
 	<script>
 		$(document).ready( function() {
 
-			$("#addToCart").onClick(function() {
-				alert("klik werkt");
+			$("#addToCart").click(function() {
+				$.ajax({
+					url: "https://localhost/educom-verrukkulluk/index.php",
+					method: "GET",
+					data: {action: "addGroceries",
+						user_id: 	$user_id,
+						recipe_id: 	$data.recipe_id
+					},
+					success: function(result){
 
-				// $.ajax({
-				// 	url: "/educom-verrukkulluk/index.php",
-				// 	method: "GET",
-				// 	data: {action: "addGroceries"},
-				// 	success: function(){
-				// 	}
-				// })
+					}
+				})
 			})
 		})
 
@@ -193,6 +195,7 @@
 </div>
 </body>
     {# Dump #}
-    <pre>
+    {# <pre>
     {{ dump(data) }}
-    </pre>
+    </pre> #}
+

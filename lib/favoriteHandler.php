@@ -9,13 +9,29 @@ class favoriteHandler {
     }
 
     public function checkFavorite($user_id, $recipe_id) {
-        //check whether favoritelink in recipeinfo
-        //return bool
+        $match = true;
+        
+        $sql = "select * from recipe_info where record_type = 'F' AND recipe_id = $recipe_id AND user_id = $user_id";
+        $result = mysqli_query($this->connection, $sql);
+
+        $hits = [];
+        while($row = $result->fetch_assoc()){
+            $hits[]=$row;
+        }
+        
+        if ($hits == []){
+            $match = false;
+        }
+
+        return($match);
     }
 
     public function swapFavorites($user_id, $recipe_id) {
-        //if no DB entry, create one
-        //if available, delete+
+        $sql = "DELETE from recipe_info where record_type = 'F' AND recipe_id = $recipe_id AND user_id = $user_id";
 
+        if ($this->checkFavorite($user_id, $recipe_id) == false){
+            $sql = "insert into recipe_info (user_id, recipe_id, record_type) values ('$user_id', '$recipe_id', 'F')";
+        }
+        $this->connection->execute_query($sql);
     }
 }

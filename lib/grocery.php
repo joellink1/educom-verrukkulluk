@@ -50,8 +50,7 @@ public function addGroceries($recipe_id, $user_id){
 private function alreadyOnList($product_id, $user_id) {
     $groceries = $this->selectGrocery($user_id);
 
-
-    while($grocery = $groceries->fetch_assoc()){
+    foreach($groceries as $grocery){
         if($grocery['product_id'] == $product_id){
             return($grocery);
         }
