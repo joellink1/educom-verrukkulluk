@@ -27,7 +27,7 @@ class ingredient {
 
     public function selectIngredient($recipe_id) {
 
-        $sql = "select * from ingredient where recipe_id = $recipe_id";
+        $sql = "select * from ingredient where recipe_id = {$recipe_id}";
         
         $result = mysqli_query($this->connection, $sql);
 

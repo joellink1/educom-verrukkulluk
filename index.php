@@ -39,8 +39,9 @@ http://localhost/index.php?recipe_id=4&action=detail
 $user_id = isset($_GET["user_id"]) ? $_GET["user_id"] : "";
 $recipe_id = isset($_GET["recipe_id"]) ? $_GET["recipe_id"] : "";
 $action = isset($_GET["action"]) ? $_GET["action"] : "homepage";
+$review_score = isset($_GET["review_score"]) ? $_GET["review_score"] : "";
 
-$user_id = 3;
+$user_id = 4;
 
 switch($action) {
 
@@ -69,14 +70,34 @@ switch($action) {
 
         case "addGroceries": {
             $result=["status"=>"success"];
-            
-            $grocery->addGroceries(1,3);
+
+            $grocery->addGroceries($recipe_id, $user_id);
             header('Content-Type: application/json; charset=utf-8');
             echo json_encode($result);
             die();
         }
 
-    }
+        case "giveRating": {
+            $rh->addReview($recipe_id, $review_score);
+            $average = $rh->giveAverage($recipe_id);
+            $result=["average"=>$average];
+            echo json_encode($result);
+            die();
+        }
+
+        case "checkFavorite": {
+            $result = ["match"=>$fh->checkFavorite($user_id, $recipe_id)];
+            echo json_encode($result);
+            die();
+        }
+
+        case "changeFavorite": {
+            $method = $fh->swapFavorites($user_id, $recipe_id);
+            $result = ["method"=> $method];
+            echo json_encode($result);
+            die();
+        }
+}
 
 /// Juiste template laden, in dit geval "homepage" 
 $template = $twig->load($template);

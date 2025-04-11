@@ -10,6 +10,7 @@
         <img src="assets/img/logo-v2.png" style="scale: 75%"/></a></p>
     </div>
 </div>
+
 {% endblock %}
 
 {% block content %}
@@ -48,11 +49,11 @@
                             <div class="col-md-3">
                             </div>
                             <div class="col-md-4">
-                                <i class="far fa-star fa-lg"></i>
-                                <i class="far fa-star fa-lg"></i>
-                                <i class="far fa-star fa-lg"></i>
-                                <i class="far fa-star fa-lg"></i>
-                                <i class="far fa-star fa-lg"></i>
+                                <i class="far fa-star fa-lg" data_value="1" data_recipe="{{data.id}}"></i>
+                                <i class="far fa-star fa-lg" data_value="2" data_recipe="{{data.id}}"></i>
+                                <i class="far fa-star fa-lg" data_value="3" data_recipe="{{data.id}}"></i>
+                                <i class="far fa-star fa-lg" data_value="4" data_recipe="{{data.id}}"></i>
+                                <i class="far fa-star fa-lg" data_value="5" data_recipe="{{data.id}}"></i>
                             </div>
                         </div>
                         <div class="row">
@@ -63,13 +64,13 @@
                         <div class="row">
                             <div class="col-md-4">
                                 <div class="oplijst">
-                                    <div style="cursor: pointer" id="addToCart"> <h3> Op lijst! </h3></div>
+                                    <div style="cursor: pointer" id="addToCart" data_value="{{data.id}}"> <h3> Op lijst! </h3></div>
                                 </div> 
                             </div>
                             <div class="col-md-6">
                             </div>
                             <div class="col-md-2">
-                                <i class="far fa-heart fa-2x icon"></i>
+                                <i id="favoriteHeart" data_value="{{data.id}}" class="far fa-heart fa-2x icon" style="cursor: pointer"></i>
                             </div>
                         </div>
                     </div>
@@ -171,6 +172,24 @@
     // Show the current tab, and add an "active" class to the button that opened the tab
     document.getElementById(tabName).style.display = "block";
     evt.currentTarget.className += " active";
-}
+    }
+
+    $.ajax({
+        url: "http://localhost/educom-verrukkulluk/index.php",
+        method: "GET",
+        async: false,
+        data: { action: "checkFavorite",
+            recipe_id: $("#favoriteHeart").attr("data_value"),
+        }, 
+        success: function(result){
+            console.log(result)
+            obj = JSON.parse(result)
+            match = obj["match"]
+            console.log(match)
+            if (match == true) {
+                $("#favoriteHeart").addClass("fas")
+            }
+        }
+    })
 </script>
 {% endblock %}

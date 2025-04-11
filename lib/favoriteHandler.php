@@ -28,10 +28,12 @@ class favoriteHandler {
 
     public function swapFavorites($user_id, $recipe_id) {
         $sql = "DELETE from recipe_info where record_type = 'F' AND recipe_id = $recipe_id AND user_id = $user_id";
-
+        $method = "delete";
         if ($this->checkFavorite($user_id, $recipe_id) == false){
             $sql = "insert into recipe_info (user_id, recipe_id, record_type) values ('$user_id', '$recipe_id', 'F')";
+            $method = "insert";
         }
         $this->connection->execute_query($sql);
+        return($method);
     }
 }

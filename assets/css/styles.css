@@ -152,9 +152,17 @@
 }
 
 .fa-star {
-    color: var(--lighter-orange)
+    color: var(--darker-orange);
+    cursor: pointer
   }
 
+.fa-star:hover {
+    color: var(--lighter-orange)
+}
+
+.fas fa-star {
+    color: var(--lighter-orange)
+}
 
 /* Style the tab */
 .tab {
