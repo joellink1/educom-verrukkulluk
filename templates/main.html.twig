@@ -24,36 +24,13 @@
 					method: "GET",
 					data: {action: "addGroceries",
 						recipe_id: $("#addToCart").attr("data_value"),
-						
+				
 					},
 					success: function(){
 					}
 				})
 			})
 		
-			$(".fa-star").click(function() {
-				const value = $(this).attr("data_value")
-				$.ajax({
-					url: "http://localhost/educom-verrukkulluk/index.php",
-					method: "GET",
-					async: false,
-					data: { review_score: value,
-							action: "giveRating",
-							recipe_id: $(this).attr("data_recipe")
-					 	},
-					success: function(result) {
-						obj = JSON.parse(result)
-						avgValue = obj["average"]
-						$(".fa-star").removeClass("fas")
-						$(".fa-star").each((index, elem) => {
-							const itemValue = $(elem).attr("data_value")
-							if (itemValue <= avgValue){
-								$(elem).addClass("fas")
-							}
-						})
-					}
-				})	
-			})
 
 			$("#favoriteHeart").click( function() {
 				$.ajax({
@@ -239,6 +216,6 @@
 </body>
     {# Dump #}
     {# <pre>
-    {{ dump(data) }}
+    {{ dump(data[0]) }}
     </pre> #}
 

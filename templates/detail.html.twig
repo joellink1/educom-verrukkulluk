@@ -8,7 +8,19 @@
     <div class="container-fluid header-main" style="background: url( {{ data.image }} ) no-repeat center; background-size: cover">
         <p><a href="/educom-verrukkulluk/index.php">
         <img src="assets/img/logo-v2.png" style="scale: 75%"/></a></p>
+        <input type="text" id="searchbar" placeholder="Zoeken...">
+        <button type="submit" id="searchbutton"><i class="fas fa-search"></i></button>
+        <div class="dropdown">
+            <i class="fas fa-bars fa-4x"></i>
+            <div class="dropdown-content">
+                <ul>
+                    <li><a href="/educom-verrukkulluk/index.php"><h1> Home </h1></a></li>
+                    <li><a href="/educom-verrukkulluk/index.php?action=grocery"><h1> Boodschappenlijst </h1></a></li>
+                </ul>
+            </div>
+        </div>
     </div>
+
 </div>
 
 {% endblock %}
@@ -173,6 +185,30 @@
     document.getElementById(tabName).style.display = "block";
     evt.currentTarget.className += " active";
     }
+
+    $(".fa-star").click(function() {
+        const value = $(this).attr("data_value")
+        $.ajax({
+            url: "http://localhost/educom-verrukkulluk/index.php",
+            method: "GET",
+            async: false,
+            data: { review_score: value,
+                    action: "giveRating",
+                    recipe_id: $(this).attr("data_recipe")
+                },
+            success: function(result) {
+                obj = JSON.parse(result)
+                avgValue = obj["average"]
+                $(".fa-star").removeClass("fas")
+                $(".fa-star").each((index, elem) => {
+                    const itemValue = $(elem).attr("data_value")
+                    if (itemValue <= avgValue){
+                        $(elem).addClass("fas")
+                    }
+                })
+            }
+        })	
+    })
 
     $.ajax({
         url: "http://localhost/educom-verrukkulluk/index.php",

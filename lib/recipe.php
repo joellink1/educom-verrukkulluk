@@ -56,6 +56,18 @@ class recipe {
 
     }
 
+    public function filterRecipes($term) {
+        $fullData = $this->selectRecipe();
+        $hits = [];
+        foreach ($fullData as $record) {
+            $string = json_encode($record);
+            if (str_contains($string, $term)){
+                $hits[] = $record;
+            }
+        }
+        return($hits);
+    }
+
     private function selectRecipeKitchenType($kitchenType_id) {
 
         $type = new kitchenType($this->connection);

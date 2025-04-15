@@ -79,4 +79,51 @@ private function addToShoppingList($product_id, $packaging, $amount, $user_id){
     
     $connection->execute_query($sql);
 }
+
+public function deleteProduct($product_id, $user_id) {
+    $connection = $this->connection;
+    
+    $sql = "delete from grocery where user_id = $user_id and product_id = $product_id";
+
+    if ($product_id == 0){
+        $sql = "delete from grocery where user_id = $user_id";
+    }
+
+    $connection->execute_query($sql);
+}
+
+public function addPackage($product_id, $user_id) {
+    $connection = $this->connection;
+
+    $sql = "select * from grocery where product_id = $product_id and user_id = $user_id";
+    $result = mysqli_query($connection, $sql)->fetch_assoc();
+
+    $package = $result["packaging"];
+    $oldAmt = $result["amount"];
+    $newAmt = $oldAmt + $package;
+
+    $sql = "update grocery set amount = $newAmt where product_id = $product_id and user_id = $user_id";
+
+    $connection->execute_query($sql);
+   
+}
+
+public function removePackage($product_id, $user_id) {
+    $connection = $this->connection;
+
+    $sql = "select * from grocery where product_id = $product_id and user_id = $user_id";
+    $result = mysqli_query($connection, $sql)->fetch_assoc();
+
+    $package = $result["packaging"];
+    $oldAmt = $result["amount"];
+    $newAmt = $oldAmt - $package;
+
+    $sql = "update grocery set amount = $newAmt where product_id = $product_id and user_id = $user_id";
+
+    if ($newAmt <= 0) {
+        $sql = "delete from grocery where product_id = $product_id and user_id = $user_id";
+    }
+    $connection->execute_query($sql);
+   
+}
 }

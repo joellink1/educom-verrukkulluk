@@ -4,10 +4,56 @@
 {% block header %}
 <div class="row">
     <div class="container-fluid header-main" style="background: url(assets/img/header.png) no-repeat center; background-size: cover">
-    <p><a href="/educom-verrukkulluk/index.php">
-    <img href="" src="assets/img/logo-v2.png" style="scale: 75%"/></a></p>
+        <p><a href="/educom-verrukkulluk/index.php">
+        <img href="" src="assets/img/logo-v2.png" style="scale: 75%"/></a></p>
+        <form action="index.php?action=searchSite" method="post">
+            <input type="text" id="query" placeholder="Zoeken..." name="query" required>
+            <button type="submit" id="searchbutton"><i class="fas fa-search"></i></button>
+        </form >
+        <div class="dropdown">
+            <i class="fas fa-bars fa-4x"></i>
+            <div class="dropdown-content">
+                <ul>
+                    <li><a href="/educom-verrukkulluk/index.php"><h1> Home </h1></a></li>
+                    <li><a href="/educom-verrukkulluk/index.php?action=grocery"><h1> Boodschappenlijst </h1></a></li>
+                </ul>
+            </div>
+        </div>
     </div>
 </div>
+
+<script>
+$(document).ready( function() {
+
+
+    
+    $(".minidetail").each((index, elem) => {
+        $.ajax ({
+            url: "http://localhost/educom-verrukkulluk/index.php",
+            method: "GET",
+            data: { action: "averageRating",
+                recipe_id: $(elem).attr("recipe_data")
+        },
+            success: function(result) {
+                obj = JSON.parse(result)
+                avgValue = obj["average"]
+                $(".fa-star").each((index, star) => {
+                    if ($(star).attr("recipe_data") == $(elem).attr("recipe_data")) {
+                        const itemValue = $(star).attr("data_value")
+                        if (itemValue <= avgValue) {
+                            $(star).addClass("fas")
+                        }
+                    }
+                })
+                
+            }
+
+        })
+	})
+})
+
+</script>
+
 {% endblock %}
 
 
@@ -24,7 +70,7 @@
         <div class="row" style="margin-top: 20px">
     {% endif %}
 
-    <div class="col-md-6">
+    <div recipe_data="{{record.id}}" class="col-md-6 minidetail">
     <div class="block border shadow">
         <div class="row">
             <div class="col-md-12" >
@@ -37,11 +83,11 @@
                 <h2> {{ record.title }} </h2>
             </div>
             <div class="col-md-4">
-                <i class="far fa-star fa-lg"></i>
-                <i class="far fa-star fa-lg"></i>
-                <i class="far fa-star fa-lg"></i>
-                <i class="far fa-star fa-lg"></i>
-                <i class="far fa-star fa-lg"></i>
+                <i recipe_data="{{record.id}}" data_value="1" class="far fa-star fa-lg"></i>
+                <i recipe_data="{{record.id}}" data_value="2" class="far fa-star fa-lg"></i>
+                <i recipe_data="{{record.id}}" data_value="3" class="far fa-star fa-lg"></i>
+                <i recipe_data="{{record.id}}" data_value="4" class="far fa-star fa-lg"></i>
+                <i recipe_data="{{record.id}}" data_value="5" class="far fa-star fa-lg"></i>
             </div>
         </div>
         <div class="row" style="padding: 20px">

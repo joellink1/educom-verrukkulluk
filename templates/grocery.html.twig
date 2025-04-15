@@ -3,15 +3,69 @@
 {% block header %}
 <div class="row">
     <div class="container-fluid header-main" style="background: url(assets/img/header.png) no-repeat center; background-size: cover">
-    <p><a href="/educom-verrukkulluk/index.php">
-    <img src="assets/img/logo-v2.png" style="scale: 75%"/></a></P>
+        <p><a href="/educom-verrukkulluk/index.php">
+        <img src="assets/img/logo-v2.png" style="scale: 75%"/></a></P>
+        <input type="text" id="searchbar" placeholder="Zoeken...">
+        <button type="submit" id="searchbutton"><i class="fas fa-search"></i></button>
+        <div class="dropdown">
+            <i class="fas fa-bars fa-4x"></i>
+            <div class="dropdown-content">
+                <ul>
+                    <li><a href="/educom-verrukkulluk/index.php"><h1> Home </h1></a></li>
+                    <li><a href="/educom-verrukkulluk/index.php?action=grocery"><h1> Boodschappenlijst </h1></a></li>
+                </ul>
+            </div>
+        </div>
     </div>
 </div>
+
+<script>
+$(document).ready( function() {
+    $(document).on("click", ".fa-trash-alt", function() {
+        $.ajax ({
+            url: "http://localhost/educom-verrukkulluk/index.php",
+            method: "GET",
+            data: { action: "deleteProduct",
+                product_id: $(this).attr("product_id")
+            },
+            success: function(result) {
+                $("#groceryList").load(" #groceryList > *")
+            }
+        })
+    })
+
+    $(document).on("click", ".fa-plus", function() {
+        $.ajax ({
+            url: "http://localhost/educom-verrukkulluk/index.php",
+            method: "GET",
+            data: { action: "addPackage",
+                    product_id: $(this).attr("product_value")
+            },
+            success: function(result) {
+                $("#groceryList").load(" #groceryList > *")
+            }
+        })
+    })
+
+    $(document).on("click", ".fa-minus", function() {
+        $.ajax ({
+            url: "http://localhost/educom-verrukkulluk/index.php",
+            method: "GET",
+            data: { action: "removePackage",
+                    product_id: $(this).attr("product_value")
+            },
+            success: function(result) {
+                $("#groceryList").load(" #groceryList > *")
+            }
+        })
+    })
+})
+</script>
 {% endblock %}
 
 {% block content %}
     <div class="col-md-8" style="padding: 20px">
-        <div class="container-fluid border shadow" style="height: 100%; padding: 30px; overflow: auto">
+        <div id="groceryList" class="container-fluid border shadow" style="height: 100%; padding: 30px; overflow: auto">
             <div class="row" style="margin-bottom: 20px">    
                 <h1 style="color: var(--lighter-green)"> Boodschappen </h1>
             </div>
@@ -26,11 +80,24 @@
                         <h3 style="color: var(--lighter-green)"> {{ record.name }} </h3>
                         {{ record.description }}
                     </div>
-                    <div class="col-md-1">
-                        {% set packagesraw = record.amount / record.packaging %}
-                        {% set packages = (packagesraw|round(0, "ceil")) %}
-                        {{ packages }}
+                    <div class="col-md-2">
+                        <div class="row">
+                            <div class="col-md-2">
+                            </div>
+                            <div class="col-md-3">
+                                <i class="fas fa-minus" product_value="{{record.id}}"></i>
+                            </div>
+                            <div class="col-md-3">
+                                {% set packagesraw = record.amount / record.packaging %}
+                                {% set packages = (packagesraw|round(0, "ceil")) %}
+                                {{ packages }}
+                            </div>
+                            <div class="col-md-3">
+                                <i class="fas fa-plus" product_value="{{record.id}}"></i>
+                            </div>
+                        </div>
                     </div>
+
                     <div class="col-md-1">
                         <i class="fas fa-euro-sign icon"></i>
                         {% set total = (packages * record.price)/100 %}
@@ -38,10 +105,7 @@
                         {{ total|round(2, "ceil")|number_format(2, ",", '.') }}
                     </div>
                     <div class="col-md-1">
-    	                <i class="fas fa-check fa-2x" style="color: var(--lighter-green)" ></i>
-                    </div>
-                    <div class="col-md-1">
-                        <i class="fas fa-trash-alt fa-2x" style="color: var(--darker-red)"></i>
+                        <i class="fas fa-trash-alt fa-2x" product_id="{{record.id}}" style="color: var(--darker-red); cursor: pointer"></i>
                     </div>
                 </div>
             {% endfor %}
@@ -59,7 +123,7 @@
                 <div class="col-md-1">
                 </div>
                 <div class="col-md-1">
-                    <i class="fas fa-trash-alt fa-2x" style="color: var(--darker-red)"></i>
+                    <i class="fas fa-trash-alt fa-2x" product_id="0" style="color: var(--darker-red); cursor: pointer"></i>
                 </div>
             </div>
         </div>

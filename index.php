@@ -40,7 +40,8 @@ $user_id = isset($_GET["user_id"]) ? $_GET["user_id"] : "";
 $recipe_id = isset($_GET["recipe_id"]) ? $_GET["recipe_id"] : "";
 $action = isset($_GET["action"]) ? $_GET["action"] : "homepage";
 $review_score = isset($_GET["review_score"]) ? $_GET["review_score"] : "";
-
+$product_id = isset($_GET["product_id"]) ? $_GET["product_id"] : "";
+$query = isset($_POST["query"]) ? $_POST["query"]: "";
 $user_id = 4;
 
 switch($action) {
@@ -77,6 +78,13 @@ switch($action) {
             die();
         }
 
+        case "averageRating": {
+            $average = $rh->giveAverage($recipe_id);
+            $result=["average"=>$average];
+            echo json_encode($result);
+            die();
+        }
+
         case "giveRating": {
             $rh->addReview($recipe_id, $review_score);
             $average = $rh->giveAverage($recipe_id);
@@ -97,6 +105,41 @@ switch($action) {
             echo json_encode($result);
             die();
         }
+
+        case "deleteProduct": {
+            $grocery->deleteProduct($product_id, $user_id);
+            $data = $grocery->selectGrocery($user_id);
+            $result = ["status"=>"success"];
+            echo json_encode($result);
+            die();
+        }
+
+        case "addPackage": {
+            $grocery->addPackage($product_id, $user_id);
+            $data = $grocery->selectGrocery($user_id);
+            $result = ["result"=>"success"];
+            echo json_encode($result);
+            die();
+
+        }
+
+        case "removePackage": {
+            $grocery->removePackage($product_id, $user_id);
+            $data = $grocery->selectGrocery($user_id);
+            $result = ["result"=>"success"];
+            echo json_encode($result);
+            die();
+        }
+
+        case "searchSite": {
+            $terms = explode("%20", $query, 1);
+            $term = $terms[0];
+            $data = $recipe->filterRecipes($term);
+            $template = 'homepage.html.twig';
+            $title = "homepage";
+
+            break;
+        }
 }
 
 /// Juiste template laden, in dit geval "homepage" 
@@ -106,3 +149,5 @@ $template = $twig->load($template);
 
 /// En tonen die handel!
 echo $template->render(["title" => $title, "data" => $data]);
+
+
